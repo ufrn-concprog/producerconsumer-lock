@@ -1,9 +1,21 @@
-
+/**
+ * Implementation of a concurrent solution to the
+ * <a href="https://en.wikipedia.org/wiki/Producer–consumer_problem">producer-consumer</a>
+ * problem using lock objects and condition variables
+ *
+ * @author <a href="mailto:everton.cavalcante@ufrn.br">Everton Cavalcante</a>
+ */
 public class ProducerConsumerMain {
-	
+	/** Capacity of the bounded buffer */
 	private static final int CAPACITY = 100;
+
+	/** Number of producer and consumer threads */
 	private static final int NUM_THREADS = 3;
 
+	/**
+	 * Main method
+	 * @param args Command line arguments
+	 */
 	public static void main(String[] args) {
 		SharedBuffer buffer = new SharedBuffer(CAPACITY);
 		

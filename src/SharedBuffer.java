@@ -4,13 +4,39 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * A bounded buffer to be shared by concurrent threads.<br/>
+ * The methods for inserting into and removing from the buffer run
+ * (upon threads) in mutual exclusion.
+ *
+ * @author <a href="mailto:everton.cavalcante@ufrn.br">Everton Cavalcante</a>
+ */
 public class SharedBuffer {
+	/** Buffer's capacity */
 	private int capacity;
+
+	/** Buffer (implemented as a queue to comply with the problem's constraints) */
 	private Queue<Integer> buffer;
+
+	/** Lock object for controlling mutual exclusion */
 	private Lock lock;
+
+	/**
+	 * Condition variable for suspending/resuming thread execution
+	 * when the buffer is full
+	 */
 	private Condition isFull;
+
+	/**
+	 * Condition variable for suspending/resuming thread execution
+	 * when the buffer is empty
+	 */
 	private Condition isEmpty;
-	
+
+	/**
+	 * Parameterized constructor
+	 * @param capacity Buffer's capacity
+	 */
 	public SharedBuffer(int capacity) {
 		this.capacity = capacity;
 		buffer = new LinkedList<Integer>();
@@ -18,8 +44,15 @@ public class SharedBuffer {
 		isFull = lock.newCondition();
 		isEmpty = lock.newCondition();
 	}
-	
-	
+
+
+	/**
+	 * Inserts an item at the end of the buffer.<br/>
+	 * If the buffer achieved its maximum capacity, then the running producer thread
+	 * is suspended on the respective condition variable, otherwise a
+	 * consumer thread eventually suspended is notified for resuming execution.
+	 * @param item Item to be inserted
+	 */
 	public void insert(int item) {
 		lock.lock();
 		try {
@@ -40,8 +73,14 @@ public class SharedBuffer {
 			lock.unlock();
 		}
 	}
-	
-	
+
+
+	/**
+	 * Removes the item at the front of the buffer.<br/>
+	 * If the buffer is currently empty, then the running consumer thread is suspended
+	 * on the respective condition variable, otherwise a
+	 * producer thread eventually suspended is notified for resuming execution.
+	 */
 	public void remove() {
 		lock.lock();
 		try {
