@@ -1,4 +1,4 @@
-# The producer-consumer problem: A solution using locks #
+# The producer-consumer problem: A solution using locks in Java #
 
 ## About
 This project implements a solution to the well-known [producer-consumer](https://en.wikipedia.org/wiki/Producer–consumer_problem) problem using locks. In the Java programming language, implementations of the [`Lock` interface](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/concurrent/locks/Lock.html) have the same idea of synchronized methods for mutual exclusion of concurrent threads. Nonetheless, these classes provide more capabilities for synchronization control, besides allowing for the use of condition variables (implementations of the [`Condition` interface](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/concurrent/locks/Condition.html) to suspend threads or notify them for execution under certain conditions.
