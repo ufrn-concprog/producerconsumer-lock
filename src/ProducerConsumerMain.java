@@ -7,10 +7,10 @@
  */
 public class ProducerConsumerMain {
 	/** Capacity of the bounded buffer */
-	private static final int CAPACITY = 100;
+	private static final int CAPACITY = 3;
 
 	/** Number of producer and consumer threads */
-	private static final int NUM_THREADS = 3;
+	private static final int NUM_THREADS = 5;
 
 	/**
 	 * Main method
@@ -19,8 +19,8 @@ public class ProducerConsumerMain {
 	public static void main(String[] args) {
 		SharedBuffer buffer = new SharedBuffer(CAPACITY);
 		
-		Producer producers[] = new Producer[NUM_THREADS];
-		Consumer consumers[] = new Consumer[NUM_THREADS];
+		Producer[] producers = new Producer[NUM_THREADS];
+		Consumer[] consumers = new Consumer[NUM_THREADS];
 		for (int i = 0; i < NUM_THREADS; i++) {
 			producers[i] = new Producer("Producer " + (i+1), buffer);
 			consumers[i] = new Consumer("Consumer " + (i+1), buffer);
